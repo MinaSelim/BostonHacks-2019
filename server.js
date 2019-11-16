@@ -39,8 +39,9 @@ server.post('/directions', function(req, res)
 
    const origin = req.body.origin;
    const destination = req.body.destination;
+   const travelMode = req.body.travelMode;
 
-    googleApi.getDirectionsBetweenTwoLocations(origin, destination).then((json) => {
+    googleApi.getDirectionsBetweenTwoLocations(origin, destination, travelMode).then((json) => {
        res.send(json);
     })
 });
