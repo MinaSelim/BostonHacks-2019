@@ -51,7 +51,8 @@ server.listen(server.get('port'), function()
     console.log('listening to port ' + server.get('port'));
 });
 
-server.get('/test-message', function(req, res)
+server.post('/message', function(req, res)
 {
-    twilio.sendMessage();
+    twilio.sendMessage(req.body.message)
+    .then((message) => res.send(message), (err) =>res.send(err.message)) ;
 });
