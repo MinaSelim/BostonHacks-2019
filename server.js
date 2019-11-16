@@ -1,5 +1,6 @@
 const express = require("express");
-
+const bodyParser = require("body-parser")
+const googleApi = require("./googleApiInterface")
 const server = express();
 
 server.set('port' , (process.env.PORT || 8080) )
@@ -10,6 +11,13 @@ server.get('/secure*', function(req, res)
 
 });
 
+server.use(
+   bodyParser.urlencoded({
+     extended: true
+   })
+ )
+ 
+ server.use(bodyParser.json())
 server.use('/ressources', express.static('ressources'));
 server.use('/Images', express.static('ressources'));
 server.use('/css' , express.static('css'));
@@ -22,6 +30,18 @@ server.get('/', function(req, res)
 {
     res.send("index");
 });
+
+server.post('/directions', function(req, res)
+{
+   console.log(req.body);
+
+   let origin = req.body.origin;
+   let destination = req.body.destination;
+    googleApi.getDirectionsBetweenTwoLocations(origin, destination).then((json) => {
+       res.send(json);
+    })
+});
+
 
 server.listen(server.get('port'), function()
 {
