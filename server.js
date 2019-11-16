@@ -17,7 +17,7 @@ server.use(
    })
  )
  
- server.use(bodyParser.json())
+server.use(bodyParser.json())
 server.use('/ressources', express.static('ressources'));
 server.use('/Images', express.static('ressources'));
 server.use('/css' , express.static('css'));
@@ -35,8 +35,9 @@ server.post('/directions', function(req, res)
 {
    console.log(req.body);
 
-   let origin = req.body.origin;
-   let destination = req.body.destination;
+   const origin = req.body.origin;
+   const destination = req.body.destination;
+
     googleApi.getDirectionsBetweenTwoLocations(origin, destination).then((json) => {
        res.send(json);
     })
