@@ -6,11 +6,9 @@ export default class DVSubcomponent extends Component{
         return(
         <div>
             <Doughnut/>
-        </div>
-        <div>
+      
             <Doughnut/>
-        </div>
-        <div>
+        
             <Doughnut/>
         </div>);
     }
