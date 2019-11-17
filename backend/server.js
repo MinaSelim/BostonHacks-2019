@@ -2,8 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser")
 const googleApi = require("./googleApiInterface")
 const twilio = require("./twilio.js");
-
+const mongo = require("./database.js");
 const server = express();
+
+
 
 server.set('port' , (process.env.PORT || 8080) )
 
@@ -39,11 +41,30 @@ server.post('/directions', function(req, res)
 
    const origin = req.body.origin;
    const destination = req.body.destination;
-   const travelMode = req.body.travelMode;
+   const travelMode = req.body.mode;
 
     googleApi.getDirectionsBetweenTwoLocations(origin, destination, travelMode).then((json) => {
        res.send(json);
     })
+});
+
+server.post('/directions/set', function (req,res){
+    const origin = req.body.origin;
+    const destination = req.body.destination;
+    const travelMode = req.body.mode;
+    const user = req.body.user;
+
+    googleApi.getDirectionsBetweenTwoLocations(origin, destination, travelMode).then((json) => {
+        res.send(json);
+        mongo.setData(user, json);
+    })
+})
+
+server.get('/stats/:user', function (req, res) {
+    console.log(req.body);
+    const user = req.params.user;
+    console.log(user);
+    mongo.getData(user,res);
 });
 
 
