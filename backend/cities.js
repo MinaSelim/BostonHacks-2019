@@ -38,22 +38,28 @@ const chooseTravelMode = () => {
    return x;
 }
 
+const addUser = (id, day) =>
+{
+   let indices = chooseTwoCities();
+   let travelModeIndex = chooseTravelMode();
+
+   googleApi.getDirectionsBetweenTwoLocations(cities[indices[0]], cities[indices[1]], travelModes[travelModeIndex])
+      .then((json) => {
+         json.timestamp = day;
+         json.mode = travelModes[travelModeIndex];
+         console.log(json);
+         mongo.setData(id.toString(), json)
+      })
+}
+
 module.exports.addUsersToDatabase = () => {
-   let i = 1;
+   let i = 4;
 
    let dayOffSet = 1;
    let bool = true;
    while (dayOffSet < 366) {
       {
-         let indices = chooseTwoCities();
-         let travelModeIndex = chooseTravelMode();
-
-         googleApi.getDirectionsBetweenTwoLocations(cities[indices[0]], cities[indices[1]], travelModes[travelModeIndex])
-            .then((json) => {
-               json.timestamp = dayOffSet;
-               console.log(json);
-               mongo.setData(i.toString(), json)
-            })
+            addUser(i, dayOffSet);
             dayOffSet += Math.floor(Math.random() * 5);            
          
       }
