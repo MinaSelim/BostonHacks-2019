@@ -9,6 +9,7 @@
     "fetch": "^1.1.0",
     "mongodb": "^3.3.4",
     "node-fetch": "^2.6.0",
+    "regression": "^2.0.1",
     "twilio": "^3.37.1"
   },
   "devDependencies": {},
