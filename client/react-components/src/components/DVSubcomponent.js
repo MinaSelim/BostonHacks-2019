@@ -48,11 +48,9 @@ export default class DVSubcomponent extends Component{
     render(){
         return(
         <div>
-            <Doughnut name={'Weekly '} percentage={this.state.percentage}/>
-      
-            <Doughnut name={'Monthly '} percentage={(this.state.percentage/2.5)}/>
-        
-            <Doughnut name={'Yearly '} percentage={(this.state.percentage/3.5)}/>
+            <Doughnut name={'Weekly '} percentage={20}/>
+            <Doughnut name={'Monthly '} percentage={10}/>
+            <Doughnut name={'Yearly '} percentage={62}/>
         </div>);
     }
 }

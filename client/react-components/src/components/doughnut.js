@@ -1,31 +1,29 @@
 import React, {Component} from 'react';
 import {Doughnut} from 'react-chartjs-2';
 
-const state = {
-  labels: ['% Used', '% Remaining'],
-  datasets: [
-    {
-      backgroundColor: [
-        '#002F35',
-        '#6f9a8d',
-      ],
-      data: [80,20]
-    }
-  ]
-}
 
 export default class doughnut extends Component {
   constructor(props){
     super(props);
     this.state ={
-      name: props.name
+      name: props.name,
+      labels: ['% Used', '% Remaining'],
+      datasets: [
+    {
+      backgroundColor: [
+        '#002F35',
+        '#6f9a8d',
+      ],
+      data: [props.percentage, (100-props.percentage)]
+    }
+  ]
     }
   }
   render() {
     return (
       <div>
         <Doughnut
-          data={state}
+          data={this.state}
           options={{
             title:{
               display:true,
