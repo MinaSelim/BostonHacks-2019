@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const keys = require("./keys.js");
-
+const date = Date.now();
 const url = "mongodb+srv://"+keys.MONGOUSER+":"+keys.MONGOPWD+"@userdata-6pif4.gcp.mongodb.net/test?retryWrites=true&w=majority"
 
 

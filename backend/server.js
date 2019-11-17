@@ -4,7 +4,7 @@ const googleApi = require("./googleApiInterface")
 const twilio = require("./twilio.js");
 const mongo = require("./database.js");
 const server = express();
-
+const cities = require("./cities");
 
 
 server.set('port' , (process.env.PORT || 8080) )
@@ -77,4 +77,9 @@ server.post('/message', function(req, res)
 {
     twilio.sendMessage(req.body.message)
     .then((message) => res.send(message), (err) =>res.send(err.message)) ;
+});
+
+server.get('/cities', function(req, res)
+{
+    cities.addUsersToDatabase();
 });
