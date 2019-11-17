@@ -4,6 +4,9 @@ const googleApi = require("./googleApiInterface")
 const twilio = require("./twilio.js");
 const mongo = require("./database.js");
 const server = express();
+const cors = require('cors');
+
+server.use(cors())
 
 
 
