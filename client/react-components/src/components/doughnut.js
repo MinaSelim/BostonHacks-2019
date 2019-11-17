@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Doughnut} from 'react-chartjs-2';
 
 const state = {
-  labels: ['Used', 'Remaining'],
+  labels: ['% Used', '% Remaining'],
   datasets: [
     {
       backgroundColor: [
@@ -15,6 +15,12 @@ const state = {
 }
 
 export default class doughnut extends Component {
+  constructor(props){
+    super(props);
+    this.state ={
+      name: props.name
+    }
+  }
   render() {
     return (
       <div>
@@ -23,7 +29,7 @@ export default class doughnut extends Component {
           options={{
             title:{
               display:true,
-              text:'Weekly Carbon Usage',
+              text:this.state.name+'Carbon Usage',
               fontSize:20
             },
             legend:{

@@ -49,7 +49,7 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} >
+          <div className={classes.form} >
             <TextField
               variant="outlined"
               margin="normal"
@@ -74,15 +74,17 @@ export default function SignInSide() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            <Link to="/data">
+              <div>
             <Button
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
             >
-              <div> <Link to="/data" >Sign In</Link></div>
+              <div color="white">Sign In</div>
             
-            </Button>
+            </Button></div></Link>
             <Grid container>
               <Grid item xs>
                 <Link className="forgot-Password">
@@ -98,7 +100,7 @@ export default function SignInSide() {
             <Box mt={5}>
             
             </Box>
-          </form>
+          </div>
         </div>
       </Grid>
     </Grid>
