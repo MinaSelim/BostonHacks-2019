@@ -24,9 +24,22 @@ module.exports.getData = (user, res) => {
         const dbo = db.db("Users");
         dbo.collection(user).find({}).toArray(function(err, result) {
             if (err) throw err;
-            res.send(result)
+            toArray(result);
+            res.send(result);
             db.close();
         });
     });
 
 };
+
+function toArray(results){
+    const xyarr = [];
+    console.log(results);
+    for(let i = 0; i<results.length; i++){
+        let distance = (results[i].rows[0].elements[0].distance.text).replace(",","");
+        let timestamp = results[i].timestamp;
+        xyarr.push([timestamp, distance])
+    }
+    return xyarr;
+}
+

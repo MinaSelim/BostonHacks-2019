@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express");express
 const bodyParser = require("body-parser")
 const googleApi = require("./googleApiInterface")
 const twilio = require("./twilio.js");
@@ -57,8 +57,10 @@ server.post('/directions/set', function (req,res){
     googleApi.getDirectionsBetweenTwoLocations(origin, destination, travelMode).then((json) => {
         res.send(json);
         mongo.setData(user, json);
-    })
-})
+    });
+
+
+});
 
 server.get('/stats/:user', function (req, res) {
     console.log(req.body);
