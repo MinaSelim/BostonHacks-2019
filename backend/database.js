@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
+const keys = require("./keys.js");
 
-const url = "mongodb+srv://flu:boston12345@userdata-6pif4.gcp.mongodb.net/test?retryWrites=true&w=majority"
+const url = "mongodb+srv://"+keys.MONGOUSER+":"+keys.MONGOPWD+"@userdata-6pif4.gcp.mongodb.net/test?retryWrites=true&w=majority"
 
 
 module.exports.setData = (user, userObj) => {
