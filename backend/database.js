@@ -34,7 +34,8 @@ module.exports.getData = (user, res) => {
             result = {
                 "footprint": yvars,
                 "timestamp": xvars,
-                "equation": result.equation
+                "equation": result.equation,
+                "challenge" : algo.getChallenge(result.equation[0])
             }
             res.send(result);
             db.close();
