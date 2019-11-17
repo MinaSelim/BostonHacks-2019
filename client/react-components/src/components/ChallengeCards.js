@@ -38,11 +38,12 @@ export default function SimpleCard() {
        if(count ===4)
        {
            let message = {
-               message: "Congratulations, You finished all the challenges"
+               "message": "Congratulations, You finished all the challenges"
            }
            fetch("https://greendetective-1573928556612.appspot.com/message", {
                method: 'post',
-               body : JSON.stringify(message)
+               body : JSON.stringify(message),
+               headers: { 'Content-Type': 'application/json' }
            }).then((response) => console.log(response));
        }
   };  
