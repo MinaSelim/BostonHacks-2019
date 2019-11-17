@@ -25,6 +25,17 @@ module.exports.getData = (user, res) => {
         dbo.collection(user).find({}).toArray(function (err, result) {
             if (err) throw err;
             result = toArray(result);
+            xvars = [];
+            yvars = [];
+            for(var i = 0; i<result.points.length; i++){
+                xvars.push(result.points[i][0]);
+                yvars.push(result.points[i][1]);
+            }
+            result = {
+                "footprint": yvars,
+                "timestamp": xvars,
+                "equation": result.equation
+            }
             res.send(result);
             db.close();
         });
@@ -34,7 +45,6 @@ module.exports.getData = (user, res) => {
 
 function toArray(results) {
     const xyarr = [];
-    console.log(results);
     for (let i = 0; i < results.length; i++) {
         try {
             let distance = (results[i].rows[0].elements[0].distance.text).replace(",", "");
@@ -53,12 +63,6 @@ function toArray(results) {
         } catch (err) {
             continue;
         }
-    }
-    xvars = [];
-    yvars = [];
-    for(var i = 0; i< xyarr.length;i++){
-        xvars.push(xyarr[i][0]);
-        yvars.push(xyarr[i][1]);
     }
 
     return algo.getRegression(xyarr);

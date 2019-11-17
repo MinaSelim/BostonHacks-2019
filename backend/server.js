@@ -69,6 +69,9 @@ server.get('/stats/:user', function (req, res) {
     mongo.getData(user,res);
 });
 
+server.get('/regression', function (req, res){
+
+})
 
 server.listen(server.get('port'), function()
 {
