@@ -80,3 +80,8 @@ server.post('/message', function(req, res)
     twilio.sendMessage(req.body.message)
     .then((message) => res.send(message), (err) =>res.send(err.message)) ;
 });
+
+server.get('/travelmode/:user', function(req, res) {
+    const user = req.params.user;
+    mongo.getTravelModeCount(user,res);
+})
