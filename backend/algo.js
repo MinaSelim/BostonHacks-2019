@@ -1,19 +1,19 @@
 const regr = require('regression');
 
-function ptCO2(distance){
-    return distance*0.00023;
+module.exports.ptCO2 = (distance) =>{
+    return distance*0.023;
 }
 
-function carCO2(distance){
-    return distance*0.00051;
+module.exports.carCO2 = (distance) => {
+    return distance*0.051;
 }
 
-function walkCO2(distance){
+module.exports.walkCO2 = (distance) => {
     return 0;
 }
 
-function getRegression(arr){
-    const result = regression.linear(arr);
+module.exports.getRegression = (arr) => {
+    const result = regr.linear(arr);
     return result;
 }
 //[timestamp, carCO2(distance)]

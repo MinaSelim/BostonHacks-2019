@@ -1,14 +1,14 @@
 const MongoClient = require('mongodb').MongoClient;
 const keys = require("./keys.js");
-
-const url = "mongodb+srv://"+keys.MONGOUSER+":"+keys.MONGOPWD+"@userdata-6pif4.gcp.mongodb.net/test?retryWrites=true&w=majority"
+const algo = require("./algo.js");
+const url = "mongodb+srv://" + keys.MONGOUSER + ":" + keys.MONGOPWD + "@userdata-6pif4.gcp.mongodb.net/test?retryWrites=true&w=majority"
 
 
 module.exports.setData = (user, userObj) => {
-    MongoClient.connect(url, function (err,db) {
+    MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         const dbo = db.db("Users");
-        dbo.collection(user).insertOne(userObj, function(err, res){
+        dbo.collection(user).insertOne(userObj, function (err, res) {
             if (err) throw err;
             console.log("data inserted");
             db.close();
@@ -18,13 +18,13 @@ module.exports.setData = (user, userObj) => {
 };
 
 module.exports.getData = (user, res) => {
-    MongoClient.connect(url, function(err, db) {
+    MongoClient.connect(url, function (err, db) {
 
         if (err) throw err;
         const dbo = db.db("Users");
-        dbo.collection(user).find({}).toArray(function(err, result) {
+        dbo.collection(user).find({}).toArray(function (err, result) {
             if (err) throw err;
-            toArray(result);
+            result = toArray(result);
             res.send(result);
             db.close();
         });
@@ -32,14 +32,37 @@ module.exports.getData = (user, res) => {
 
 };
 
-function toArray(results){
+function toArray(results) {
     const xyarr = [];
     console.log(results);
-    for(let i = 0; i<results.length; i++){
-        let distance = (results[i].rows[0].elements[0].distance.text).replace(",","");
-        let timestamp = results[i].timestamp;
-        xyarr.push([timestamp, distance])
+    for (let i = 0; i < results.length; i++) {
+        try {
+            let distance = (results[i].rows[0].elements[0].distance.text).replace(",", "");
+            distance = parseFloat(distance);
+            if(results[i].mode == 'driving'){
+                distance = algo.carCO2(distance);
+            }
+            if(results[i].mode == 'walking' || results[i].mode == 'bicycling'){
+               distance = algo.walkCO2(distance);
+            }
+            if(results[i].mode == 'transit'){
+                distance = algo.ptCO2(distance);
+            }
+            let timestamp = results[i].timestamp;
+            xyarr.push([timestamp, distance])
+        } catch (err) {
+            continue;
+        }
     }
-    return xyarr;
-}
+    xvars = [];
+    yvars = [];
+    for(var i = 0; i< xyarr.length;i++){
+        xvars.push(xyarr[i][0]);
+        yvars.push(xyarr[i][1]);
+    }
 
+    return algo.getRegression(xyarr);
+}
+//car challenges
+//load page
+//
