@@ -2,7 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 const keys = require("./keys.js");
 const algo = require("./algo.js");
 const url = "mongodb+srv://" + keys.MONGOUSER + ":" + keys.MONGOPWD + "@userdata-6pif4.gcp.mongodb.net/test?retryWrites=true&w=majority"
-
+const travelMode = require('./travelmode');
 
 module.exports.setData = (user, userObj) => {
     MongoClient.connect(url, function (err, db) {
@@ -42,6 +42,20 @@ module.exports.getData = (user, res) => {
     });
 
 };
+
+module.exports.getTravelModeCount = (user, res) => {
+    MongoClient.connect(url, function(err, db){
+        if (err) throw err;
+        const dbo = db.db("Users");
+        dbo.collection(user).find({}).toArray(function (err, result) {
+            if (err) throw err;
+            result = travelMode.travelModeCount(result);
+            res.send(result);
+            db.close();
+        });
+
+    })
+}
 
 function toArray(results) {
     const xyarr = [];
